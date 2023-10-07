@@ -15,6 +15,6 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="../../GS.LengthConverter.Net6/bin/Debug/net6.0/GS.LengthConverter.Net6.dll" target="lib/net6.0/" />
+        <file src="../GS.LengthConverter.Net6/bin/Debug/net6.0/GS.LengthConverter.Net6.dll" target="lib/net6.0/" />
     </files>
 </package>

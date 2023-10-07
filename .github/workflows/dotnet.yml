@@ -32,5 +32,7 @@ jobs:
         nuget-api-key: ${{ secrets.NuGetAPIKey }}
         nuget-version: latest
     - run: ls ./GS.LengthConverter.Net6/bin/
+    - run: ls ./GS.LengthConverter.Net6/bin/Debug
+    - run: ls ./GS.LengthConverter.Net6/bin/Debug/net6.0
     - run: nuget restore ./GS.LengthConverter.sln
     - run: nuget pack ./nuspec/GS.LengthConverter.nuspec

@@ -31,5 +31,6 @@ jobs:
       with:
         nuget-api-key: ${{ secrets.NuGetAPIKey }}
         nuget-version: latest
-    - run: nuget restore ~/GS.LengthConverter.sln
-    - run: nuget pack ~/nuspec/GS.LengthConverter.nuspec
+    - run: ls
+    - run: nuget restore ../GS.LengthConverter.sln
+    - run: nuget pack ../nuspec/GS.LengthConverter.nuspec

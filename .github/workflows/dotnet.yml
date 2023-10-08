@@ -111,7 +111,7 @@ jobs:
         sparse-checkout: |
           ./GS.LengthConverter/nuspec/GS.LengthConverter.nuspec
         sparse-checkout-cone-mode: false
-        fetch-depth: 0
+        #fetch-depth: 0
 
     #- name: Download artifacts
     #  uses: actions/download-artifact@v3

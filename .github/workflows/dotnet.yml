@@ -41,6 +41,13 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
 
+    - name: Archive artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: GS-LengthConverter-Net6-dll
+        path: |
+          ./GS.LengthConverter.Net6/bin/Debug/net6.0/GS.LengthConverter.Net6.dll
+
 
   deploy:
     needs: build

@@ -32,5 +32,5 @@ jobs:
       with:
         nuget-api-key: ${{ secrets.NuGetAPIKey }}
         nuget-version: latest
-    - run: nuget pack ./nuspec/GS.LengthConverter.nuspec
-    - run: nuget push ./GS.LengthConverter.0.0.0.1-alpha.nupkg -Version 0.0.0.2-alpha -src https://api.nuget.org/v3/index.json
+    - run: nuget pack ./nuspec/GS.LengthConverter.nuspec -Version 0.0.0.2-alpha
+    - run: nuget push ./GS.LengthConverter.0.0.0.1-alpha.nupkg -src https://api.nuget.org/v3/index.json

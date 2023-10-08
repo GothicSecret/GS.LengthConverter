@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: .NET
+name: build
 
 on:
   push:
@@ -92,10 +92,19 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
 
-    - uses: nuget/setup-nuget@v1
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install NuGet
+      uses: nuget/setup-nuget@v1
       with:
         nuget-api-key: ${{ secrets.NuGetAPIKey }}
         nuget-version: latest
 
-    - run: nuget pack ./nuspec/GS.LengthConverter.nuspec -Version ${{steps.version.outputs.version}}-build-${{github.run_number}}
-    - run: nuget push ./GS.LengthConverter.${{steps.version.outputs.version}}-build-${{github.run_number}}.nupkg -src https://api.nuget.org/v3/index.json
+    - name: NuGet Pack
+      run: nuget push ./GS.LengthConverter.${{steps.version.outputs.version}}-build-${{github.run_number}}.nupkg -src https://api.nuget.org/v3/index.json
+
+    - name: NuGet Push
+      run: nuget pack ./nuspec/GS.LengthConverter.nuspec -Version ${{steps.version.outputs.version}}-build-${{github.run_number}}

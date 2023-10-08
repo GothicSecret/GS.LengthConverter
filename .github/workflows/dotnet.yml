@@ -103,6 +103,11 @@ jobs:
         nuget-api-key: ${{ secrets.NuGetAPIKey }}
         nuget-version: latest
 
+    - run: ls /home/runner/work/
+    - run: ls /home/runner/work/GS.LengthConverter
+    - run: ls /home/runner/work/GS.LengthConverter/GS.LengthConverter
+    - run: ls /home/runner/work/GS.LengthConverter/GS.LengthConverter/nuspec
+
     - name: NuGet Pack
       run: nuget pack ./nuspec/GS.LengthConverter.nuspec -Version ${{steps.version.outputs.version}}-build-${{github.run_number}}
 

@@ -98,5 +98,5 @@ jobs:
         nuget-version: latest
 
     - run: echo ${{steps.version.outputs.version}}
-    #- run: nuget pack ./nuspec/GS.LengthConverter.nuspec -Version ${{version}}
-    #- run: nuget push ./GS.LengthConverter.${{version}}.nupkg -src https://api.nuget.org/v3/index.json
+    - run: nuget pack ./nuspec/GS.LengthConverter.nuspec -Version ${{steps.version.outputs.version}}
+    - run: nuget push ./GS.LengthConverter.${{steps.version.outputs.version}}.nupkg -src https://api.nuget.org/v3/index.json

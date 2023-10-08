@@ -104,7 +104,7 @@ jobs:
         nuget-version: latest
 
     - name: NuGet Pack
-      run: nuget push ./GS.LengthConverter.${{steps.version.outputs.version}}-build-${{github.run_number}}.nupkg -src https://api.nuget.org/v3/index.json
+      run: nuget pack ./nuspec/GS.LengthConverter.nuspec -Version ${{steps.version.outputs.version}}-build-${{github.run_number}}
 
     - name: NuGet Push
-      run: nuget pack ./nuspec/GS.LengthConverter.nuspec -Version ${{steps.version.outputs.version}}-build-${{github.run_number}}
+      run: nuget push ./GS.LengthConverter.${{steps.version.outputs.version}}-build-${{github.run_number}}.nupkg -src https://api.nuget.org/v3/index.json

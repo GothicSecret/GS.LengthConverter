@@ -41,12 +41,13 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
 
-    - name: Archive artifacts
+    - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
         name: GS-LengthConverter-Net6-dll
         path: |
           ./GS.LengthConverter.Net6/bin/Debug/net6.0/GS.LengthConverter.Net6.dll
+          retention-days: 1
 
 
   deploy:
@@ -103,6 +104,11 @@ jobs:
     #previous_version is the previous version.
     #debug_output will show diagnostic information, if debug is enabled
     ##
+
+    - name: Download artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: GS-LengthConverter-Net6-dll
 
     - name: Install NuGet
       uses: nuget/setup-nuget@v1

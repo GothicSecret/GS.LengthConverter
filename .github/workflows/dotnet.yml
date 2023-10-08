@@ -16,6 +16,7 @@ jobs:
 
     steps:
     - name: version
+      id: version
       uses: paulhatch/semantic-version@v5.3.0
       with:
         # The prefix to use to identify tags
@@ -72,13 +73,19 @@ jobs:
     - name: Output Run Attempt
       run: echo ${{ github.run_attempt }}
 
-    - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
+
     - name: Restore dependencies
       run: dotnet restore
+
     - name: Build
       run: dotnet build --no-restore
 
@@ -90,5 +97,6 @@ jobs:
         nuget-api-key: ${{ secrets.NuGetAPIKey }}
         nuget-version: latest
     - run: echo ${{version}}
+    - run: echo ${{steps.version.outputs.version}}
     - run: nuget pack ./nuspec/GS.LengthConverter.nuspec -Version ${{version}}
     - run: nuget push ./GS.LengthConverter.${{version}}.nupkg -src https://api.nuget.org/v3/index.json

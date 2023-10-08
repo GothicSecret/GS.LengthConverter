@@ -1,19 +1,54 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: deploy
+name: build
 
-on:
-  push:
-    branches: [ "dev1" ]
-  pull_request:
-    ranches: [ "dev1" ]
+on: workflow_dispatch
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
 
+    steps:
+    - name: Output Run ID
+      run: echo ${{ github.run_id }}
+    - name: Output Run Number
+      run: echo ${{ github.run_number }}
+    - name: Output Run Attempt
+      run: echo ${{ github.run_attempt }}
+
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore
+
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: GS-LengthConverter-Net6-dll
+        path: |
+          ./GS.LengthConverter.Net6/bin/Debug/net6.0/GS.LengthConverter.Net6.dll
+          retention-days: 1
+
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
     steps:
     - name: version
       id: version
@@ -66,36 +101,32 @@ jobs:
     #debug_output will show diagnostic information, if debug is enabled
     ##
 
-    - name: Output Run ID
-      run: echo ${{ github.run_id }}
-    - name: Output Run Number
-      run: echo ${{ github.run_number }}
-    - name: Output Run Attempt
-      run: echo ${{ github.run_attempt }}
-
     - name: Checkout
       uses: actions/checkout@v4
       with:
+        sparse-checkout: |
+          nuspec/GS.LengthConverter.nuspec
+        sparse-checkout-cone-mode: false
         fetch-depth: 0
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+    - name: Download artifacts
+      uses: actions/download-artifact@v3
       with:
-        dotnet-version: 6.0.x
+        name: GS-LengthConverter-Net6-dll
 
-    - name: Restore dependencies
-      run: dotnet restore
-
-    - name: Build
-      run: dotnet build --no-restore
-
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
-
-    - uses: nuget/setup-nuget@v1
+    - name: Install NuGet
+      uses: nuget/setup-nuget@v1
       with:
         nuget-api-key: ${{ secrets.NuGetAPIKey }}
         nuget-version: latest
 
-    - run: nuget pack ./nuspec/GS.LengthConverter.nuspec -Version ${{steps.version.outputs.version}}-build-${{github.run_number}}
-    - run: nuget push ./GS.LengthConverter.${{steps.version.outputs.version}}-build-${{github.run_number}}.nupkg -src https://api.nuget.org/v3/index.json
+    - run: ls /home/runner/work/
+    - run: ls /home/runner/work/GS.LengthConverter
+    - run: ls /home/runner/work/GS.LengthConverter/GS.LengthConverter
+    - run: ls /home/runner/work/GS.LengthConverter/GS.LengthConverter/nuspec
+
+    - name: NuGet Pack
+      run: nuget pack ./nuspec/GS.LengthConverter.nuspec -Version ${{steps.version.outputs.version}}-build-${{github.run_number}}
+
+    - name: NuGet Push
+      run: nuget push ./GS.LengthConverter.${{steps.version.outputs.version}}-build-${{github.run_number}}.nupkg -src https://api.nuget.org/v3/index.json

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>GS.LengthConverter</id>
+        <title>GS.LengthConverter</title>
+        <version>0.0.0.1-alpha</version>
+        <authors>GothicSecret</authors>
+        <owners>GothicSecret</owners>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>GS.LengthConverter offers conversion functions for various units of length across different measurement systems</description>
+        <releaseNotes></releaseNotes>
+        <copyright>Copyright � GothicSecret 2023</copyright>
+        <tags>GS.LengthConverter</tags>
+        <dependencies>
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="../GS.LengthConverter.Net6/bin/Debug/net6.0/GS.LengthConverter.Net6.dll" target="lib/net6.0/" />
+    </files>
+</package>

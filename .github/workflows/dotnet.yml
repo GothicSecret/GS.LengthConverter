@@ -111,11 +111,9 @@ jobs:
         fetch-depth: 0
 
     - name: Download artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/download-artifact@v3
       with:
         name: GS-LengthConverter-Net6-dll
-        path: |
-          ./GS.LengthConverter.Net6/bin/Debug/net6.0/GS.LengthConverter.Net6.dll
 
     - name: Install NuGet
       uses: nuget/setup-nuget@v1

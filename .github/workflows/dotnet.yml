@@ -96,7 +96,7 @@ jobs:
       with:
         nuget-api-key: ${{ secrets.NuGetAPIKey }}
         nuget-version: latest
-    - run: echo ${{version}}
+
     - run: echo ${{steps.version.outputs.version}}
     - run: nuget pack ./nuspec/GS.LengthConverter.nuspec -Version ${{version}}
     - run: nuget push ./GS.LengthConverter.${{version}}.nupkg -src https://api.nuget.org/v3/index.json

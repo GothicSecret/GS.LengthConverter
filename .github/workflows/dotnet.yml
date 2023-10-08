@@ -109,15 +109,14 @@ jobs:
       uses: actions/checkout@v4
       with:
         sparse-checkout: |
-          README.md
           nuspec/GS.LengthConverter.nuspec
         sparse-checkout-cone-mode: false
-        #fetch-depth: 0
+        fetch-depth: 0
 
-    #- name: Download artifacts
-    #  uses: actions/download-artifact@v3
-    #  with:
-    #    name: GS-LengthConverter-Net6-dll
+    - name: Download artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: GS-LengthConverter-Net6-dll
 
     - name: Install NuGet
       uses: nuget/setup-nuget@v1

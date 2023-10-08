@@ -104,6 +104,12 @@ jobs:
     #previous_version is the previous version.
     #debug_output will show diagnostic information, if debug is enabled
     ##
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        sparse-checkout: |
+          ./nuspec/GS.LengthConverter.nuspec
+        sparse-checkout-cone-mode: false
 
     - name: Checkout
       uses: actions/checkout@v4

@@ -16,25 +16,38 @@ public class LengthConverter : ILengthConverter
         {
             SystemOfUnits.SI, new()
             {
-                { LengthUnit.Millimeters, new() { Order = 0, Multiplier = 1m } },
-                { LengthUnit.Meter, new() { Order = 1, Multiplier = 1000m } },
-                { LengthUnit.Kilometer, new() { Order = 2, Multiplier = 1000m } },
+                { LengthUnit.Millimeter, new() { Order = 0, Multiplier = 1m } },
+                { LengthUnit.Centimeter, new() { Order = 1, Multiplier = 10m } },
+                { LengthUnit.Decimeter, new() { Order = 2, Multiplier = 10m } },
+                { LengthUnit.Meter, new() { Order = 3, Multiplier = 10m } },
+                { LengthUnit.Decameter, new() { Order = 4, Multiplier = 10m } },
+                { LengthUnit.Hectometer, new() { Order = 5, Multiplier = 10m } },
+                { LengthUnit.Kilometer, new() { Order = 6, Multiplier = 10m } },
             }
         },
         {
             SystemOfUnits.Imperial, new()
             {
-                { LengthUnit.Inches, new() { Order = 0, Multiplier = 1m } },
-                { LengthUnit.InternationalFeet, new() { Order = 1, Multiplier = 12m } },
-                { LengthUnit.Yard, new() { Order = 2, Multiplier = 3m } },
-                { LengthUnit.Mile, new() { Order = 3, Multiplier = 1760m } },
+                { LengthUnit.Inch, new() { Order = 0, Multiplier = 1m } },
+                { LengthUnit.Hand, new() { Order = 1, Multiplier = 4m } },
+                { LengthUnit.Foot, new() { Order = 2, Multiplier = 3m } },
+                { LengthUnit.Yard, new() { Order = 3, Multiplier = 3m } },
+                { LengthUnit.Chain, new() { Order = 4, Multiplier = 22m } },
+                { LengthUnit.Furlong, new() { Order = 5, Multiplier = 10m } },
+                { LengthUnit.Mile, new() { Order = 6, Multiplier = 8m } },
+                { LengthUnit.League, new() { Order = 7, Multiplier = 3m } },
             }
         },
         {
             SystemOfUnits.UnitedStatesCustomaryUnits, new()
             {
                 { LengthUnit.UsSurveyLink, new() { Order = -1, Multiplier = 1m } },
-                { LengthUnit.UsSurveyFeet, new() { Order = 0, Multiplier = 1m } },
+                { LengthUnit.UsSurveyFoot, new() { Order = 0, Multiplier = 33m / 50m } },
+                { LengthUnit.UsSurveyRod, new() { Order = 1, Multiplier = 16.5m } },
+                { LengthUnit.UsSurveyChain, new() { Order = 2, Multiplier = 4m } },
+                { LengthUnit.UsSurveyFurlong, new() { Order = 3, Multiplier = 10m } },
+                { LengthUnit.UsSurveyMile, new() { Order = 4, Multiplier = 8m } },
+                { LengthUnit.UsSurveyLeague, new() { Order = 5, Multiplier = 3m } },
             }
         },
     };
@@ -42,24 +55,24 @@ public class LengthConverter : ILengthConverter
     private static readonly Dictionary<LengthUnit, Dictionary<LengthUnit, decimal>> _interSystemUnits = new()
     {
         {
-            LengthUnit.Millimeters, new()
+            LengthUnit.Millimeter, new()
             {
-                { LengthUnit.Inches, 1 / 25.4m },
-                { LengthUnit.UsSurveyFeet, 1m / (1000 * 1200m / 3937m) },
+                { LengthUnit.Inch, 1 / 25.4m },
+                { LengthUnit.UsSurveyFoot, 1m / (1000 * 1200m / 3937m) },
             }
         },
         {
-            LengthUnit.Inches, new()
+            LengthUnit.Inch, new()
             {
-                { LengthUnit.Millimeters, 25.4m },
-                { LengthUnit.UsSurveyFeet, 25.4m / (1000 * 1200m / 3937m) },
+                { LengthUnit.Millimeter, 25.4m },
+                { LengthUnit.UsSurveyFoot, 25.4m / (1000 * 1200m / 3937m) },
             }
         },
         {
-            LengthUnit.UsSurveyFeet, new()
+            LengthUnit.UsSurveyFoot, new()
             {
-                { LengthUnit.Inches, 1000 * 1200m / 3937m / 25.4m },
-                { LengthUnit.Millimeters, 1000 * 1200m / 3937m },
+                { LengthUnit.Inch, 1000 * 1200m / 3937m / 25.4m },
+                { LengthUnit.Millimeter, 1000 * 1200m / 3937m },
             }
         },
     };

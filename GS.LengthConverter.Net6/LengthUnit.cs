@@ -3,19 +3,28 @@
 public enum LengthUnit
 {
     //International System of Units (SI)
-    Millimeters,
+    Millimeter,
+    Centimeter,
+    Decimeter,
     Meter,
+    Decameter,
+    Hectometer,
     Kilometer,
+    Megameter,
 
     //Imperial units
-    InternationalFeet,
-    Inches,
+    Inch,
+    Hand,
+    Foot,
     Yard,
+    Chain,
+    Furlong,
     Mile,
+    League,
 
     //United States customary units
     UsSurveyLink,
-    UsSurveyFeet,
+    UsSurveyFoot,
     UsSurveyRod,
     UsSurveyChain,
     UsSurveyFurlong,

@@ -6,9 +6,6 @@ name: Publish To Nuget
 on: workflow_dispatch
 
 env:
-  Major: 1
-  Minor: 0
-  Patch: 2
   IsPrerelease: true
 
 jobs:
@@ -59,7 +56,7 @@ jobs:
         # A string which indicates the flags used by the `minor_pattern` regular expression. Supported flags: idgs
         minor_regexp_flags: ""
         # A string to determine the format of the version output
-        version_format: "${major}.${minor}.${patch}-prerelease${increment}"
+        version_format: "${major}.${minor}.${patch}-prerelease$-{increment}"
         # Optional path to check for changes. If any changes are detected in the path the
         # 'changed' output will true. Enter multiple paths separated by spaces.
         #change_path: "src/my-service"
@@ -75,12 +72,12 @@ jobs:
         user_format_type: "csv"
         # Prevents pre-v1.0.0 version from automatically incrementing the major version.
         # If enabled, when the major version is 0, major releases will be treated as minor and minor as patch. Note that the version_type output is unchanged.
-        enable_prerelease_mode: false
+        enable_prerelease_mode: ${{IsPrerelease}}
         # If enabled, diagnostic information will be added to the action output.
         debug: false
 
     - name: NuGet Pack
-      run: nuget pack ./nuspec/GS.LengthConverter.nuspec -Version ${{steps.set_version.outputs.version}}-build-${{github.run_number}}
+      run: nuget pack ./nuspec/GS.LengthConverter.nuspec -Version ${{steps.set_version.outputs.version}}
 
     - name: NuGet Push
-      run: nuget push ./GS.LengthConverter.${{steps.set_version.outputs.version}}-build-${{github.run_number}}.nupkg -src https://api.nuget.org/v3/index.json
+      run: nuget push ./GS.LengthConverter.${{steps.set_version.outputs.version}}.nupkg -src https://api.nuget.org/v3/index.json

@@ -43,7 +43,8 @@ jobs:
         nuget-api-key: ${{ secrets.NuGetAPIKey }}
         nuget-version: latest
 
-    - name: asas
+    - name: Set Version
+      id: set_version
       uses: paulhatch/semantic-version@v5.3.0
       with:
         # The prefix to use to identify tags
@@ -78,12 +79,8 @@ jobs:
         # If enabled, diagnostic information will be added to the action output.
         debug: false
 
-    #- name: Set Version
-    #  env:
-    #    Version: "$Major.$Minor.$Patch"
-
     - name: NuGet Pack
-      run: nuget pack ./nuspec/GS.LengthConverter.nuspec -Version $Major.$Minor.$Patch-build-${{github.run_number}}
+      run: nuget pack ./nuspec/GS.LengthConverter.nuspec -Version ${{steps.set_version.outputs.version}}-build-${{github.run_number}}
 
     - name: NuGet Push
-      run: nuget push ./GS.LengthConverter.$Major.$Minor.$Patch-build-${{github.run_number}}.nupkg -src https://api.nuget.org/v3/index.json
+      run: nuget push ./GS.LengthConverter.${{steps.set_version.outputs.version}}-build-${{github.run_number}}.nupkg -src https://api.nuget.org/v3/index.json
